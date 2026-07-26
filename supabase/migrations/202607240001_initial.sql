@@ -318,6 +318,30 @@ create trigger on_auth_user_created
 after insert on auth.users
 for each row execute function public.handle_new_user();
 
+-- Backfill users who registered before this initial migration was applied.
+insert into public.profiles (id,display_name,email)
+select
+  user_row.id,
+  coalesce(
+    nullif(user_row.raw_user_meta_data->>'display_name',''),
+    split_part(user_row.email,'@',1)
+  ),
+  user_row.email
+from auth.users user_row
+where user_row.email is not null
+on conflict (id) do nothing;
+
+insert into public.workspaces (name,owner_id)
+select
+  coalesce(nullif(profile_row.display_name,''),split_part(profile_row.email,'@',1)) || ' — Pribadi',
+  profile_row.id
+from public.profiles profile_row
+where not exists (
+  select 1
+  from public.workspace_members membership_row
+  where membership_row.user_id = profile_row.id
+);
+
 create or replace view public.account_balances
 with (security_invoker = true)
 as
