@@ -34,6 +34,9 @@ button { cursor: pointer; }
 .logo strong span { color: var(--mint); }
 .button { min-height: 42px; padding: 0 18px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; font-weight: 650; transition: .2s ease; }
 .button:hover { transform: translateY(-1px); }
+.button:disabled { cursor: wait; opacity: .72; transform: none; }
+.submit-spinner { animation: submit-spin .8s linear infinite; }
+@keyframes submit-spin { to { transform: rotate(360deg); } }
 .button-primary { color: white; background: var(--navy); box-shadow: 0 8px 20px rgba(11,37,55,.16); }
 .button-primary:hover { background: var(--navy-2); }
 .button-ghost { background: transparent; color: var(--navy); }

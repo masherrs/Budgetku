@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { register } from "../auth-actions";
+import { SubmitButton } from "@/components/submit-button";
 
 export default async function RegisterPage({
   searchParams,
@@ -17,7 +18,7 @@ export default async function RegisterPage({
         <div className="field"><label htmlFor="email">Email</label><input className="input" id="email" name="email" type="email" placeholder="nama@email.com" required autoComplete="email" /></div>
         <div className="field"><label htmlFor="password">Kata sandi</label><input className="input" id="password" name="password" type="password" minLength={8} placeholder="Minimal 8 karakter" required autoComplete="new-password" /></div>
         <div className="auth-row"><span>Dengan mendaftar, kamu menyetujui penggunaan BudgetKu.</span></div>
-        <button className="button button-primary button-block" type="submit">Buat akun gratis</button>
+        <SubmitButton idleLabel="Buat akun gratis" pendingLabel="Mendaftarkan akun..." />
       </form>
       <p className="auth-switch">Sudah punya akun? <Link href="/login">Masuk</Link></p>
     </div>

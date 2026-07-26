@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { forgotPassword } from "../auth-actions";
+import { SubmitButton } from "@/components/submit-button";
 
 export default async function ForgotPage({
   searchParams,
@@ -15,7 +16,7 @@ export default async function ForgotPage({
       {params.success && <div className="form-message success">{params.success}</div>}
       <form action={forgotPassword}>
         <div className="field"><label htmlFor="email">Email</label><input className="input" id="email" name="email" type="email" placeholder="nama@email.com" required /></div>
-        <div style={{ marginTop: 22 }}><button className="button button-primary button-block" type="submit">Kirim tautan pemulihan</button></div>
+        <div style={{ marginTop: 22 }}><SubmitButton idleLabel="Kirim tautan pemulihan" pendingLabel="Mengirim tautan..." /></div>
       </form>
       <p className="auth-switch"><Link href="/login">← Kembali ke halaman masuk</Link></p>
     </div>

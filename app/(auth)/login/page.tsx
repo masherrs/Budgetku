@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { login } from "../auth-actions";
+import { SubmitButton } from "@/components/submit-button";
 
 export default async function LoginPage({
   searchParams,
@@ -17,7 +18,7 @@ export default async function LoginPage({
         <div className="field"><label htmlFor="email">Email</label><input className="input" id="email" name="email" type="email" placeholder="nama@email.com" required autoComplete="email" /></div>
         <div className="field"><label htmlFor="password">Kata sandi</label><input className="input" id="password" name="password" type="password" placeholder="Minimal 8 karakter" required autoComplete="current-password" /></div>
         <div className="auth-row"><span>Data tersimpan dengan aman</span><Link href="/forgot-password">Lupa kata sandi?</Link></div>
-        <button className="button button-primary button-block" type="submit">Masuk ke BudgetKu</button>
+        <SubmitButton idleLabel="Masuk ke BudgetKu" pendingLabel="Sedang masuk..." />
       </form>
       <p className="auth-switch">Belum punya akun? <Link href="/register">Daftar gratis</Link></p>
     </div>

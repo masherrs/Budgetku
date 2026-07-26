@@ -24,6 +24,7 @@ export async function login(formData: FormData) {
 }
 
 export async function register(formData: FormData) {
+  let needsEmailConfirmation = true;
   try {
     supabaseConfig();
     const name = String(formData.get("name") ?? "").trim();
@@ -41,12 +42,21 @@ export async function register(formData: FormData) {
       },
     });
     if (error) redirect(messageUrl("/register", error.message));
-    if (data.session) redirect("/dashboard");
+    needsEmailConfirmation = !data.session;
+    if (data.session) await supabase.auth.signOut();
   } catch (error) {
     if (error instanceof Error && error.message === "NEXT_REDIRECT") throw error;
     redirect(messageUrl("/register", error instanceof Error ? error.message : "Gagal mendaftar."));
   }
-  redirect(messageUrl("/login", "Cek email untuk mengaktifkan akunmu.", true));
+  redirect(
+    messageUrl(
+      "/login",
+      needsEmailConfirmation
+        ? "Registrasi berhasil. Cek email untuk mengaktifkan akun, lalu masuk."
+        : "Registrasi berhasil. Silakan masuk dengan akun barumu.",
+      true,
+    ),
+  );
 }
 
 export async function forgotPassword(formData: FormData) {
