@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowDownLeft, ArrowUpRight, CircleDollarSign, Plus, ReceiptText, Wallet } from "lucide-react";
+import { ExportPdfButton } from "@/components/export-pdf-button";
 import { PageHeader } from "@/components/page-header";
 import { TransactionList } from "@/components/transaction-list";
 import { getAppContext, getDashboardData } from "@/lib/data";
@@ -20,6 +21,7 @@ export default async function DashboardPage() {
   return (
     <>
       <PageHeader title={`Halo, ${displayName} 👋`} description={`${monthLabel(month, year)} · ${context.workspace.name}`}>
+        <ExportPdfButton />
         <Link className="button button-primary" href="/transactions/new"><Plus size={17}/><span>Tambah transaksi</span></Link>
       </PageHeader>
 
