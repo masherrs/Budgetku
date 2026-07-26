@@ -97,7 +97,9 @@ export async function getTransactions(
   const supabase = await createClient();
   let query = supabase
     .from("transactions")
-    .select("*,accounts(name,icon,color),categories(name,icon,color)")
+    .select(
+      "*,accounts!transactions_account_id_fkey(name,icon,color),categories!transactions_category_id_fkey(name,icon,color)",
+    )
     .eq("workspace_id", workspaceId)
     .order("date", { ascending: false })
     .order("created_at", { ascending: false })
@@ -136,7 +138,7 @@ export async function getBudgets(workspaceId: string, month: number, year: numbe
   const [{ data: budgets, error }, { data: expenses }] = await Promise.all([
     supabase
       .from("budgets")
-      .select("*,categories(name,icon,color)")
+      .select("*,categories!budgets_category_id_fkey(name,icon,color)")
       .eq("workspace_id", workspaceId)
       .eq("month", month)
       .eq("year", year)
